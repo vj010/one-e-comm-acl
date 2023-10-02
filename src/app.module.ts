@@ -16,7 +16,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
         username: configService.get<string>('DB_USER'),
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
-        entities: [],
+        entities: ['dist/**/entities/*.{ts,js}'],
         synchronize: true,
       }),
       inject: [ConfigService],
