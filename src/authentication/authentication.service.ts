@@ -35,6 +35,5 @@ export class AuthenticationService {
     if (!user)
       throw new HttpException('wrong credentials', HttpStatus.UNAUTHORIZED);
     session.user = user;
-    console.log(session.user);
   }
 }
