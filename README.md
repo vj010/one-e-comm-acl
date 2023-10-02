@@ -34,6 +34,8 @@ $ npm install
 
 ## Running the app
 
+The application will need the schema specified in `db-schemas/base-schema.sql`
+
 ```bash
 # development
 $ npm run start
