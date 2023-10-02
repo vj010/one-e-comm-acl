@@ -1,7 +1,14 @@
-import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Session,
+  ValidationPipe,
+} from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { SignupDto } from './dtos/signup.dto';
-
+import { LoginDto } from './dtos/signup.dto copy';
+import { SessionData as ExpressSession } from 'express-session';
 @Controller('authentication')
 export class AuthenticationController {
   constructor(private authenticationService: AuthenticationService) {}
@@ -12,5 +19,10 @@ export class AuthenticationController {
   }
 
   @Post('/login')
-  async login() {}
+  async login(
+    @Body(ValidationPipe) loginDto: LoginDto,
+    @Session() session: ExpressSession,
+  ) {
+    return this.authenticationService.login(loginDto, session);
+  }
 }

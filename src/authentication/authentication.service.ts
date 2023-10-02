@@ -3,7 +3,8 @@ import { SignupDto } from './dtos/signup.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from './entities/users.entity';
 import { Repository } from 'typeorm';
-
+import { LoginDto } from './dtos/signup.dto copy';
+import { SessionData as ExpressSession } from 'express-session';
 @Injectable()
 export class AuthenticationService {
   constructor(
@@ -22,5 +23,18 @@ export class AuthenticationService {
   async getUserByUserName(userName: string): Promise<Users> {
     const user = await this.userRepo.findOne({ where: { userName } });
     return user;
+  }
+
+  async login(loginDto: LoginDto, session: ExpressSession) {
+    const user = await this.userRepo.findOne({
+      where: {
+        userName: loginDto.userName,
+        password: loginDto.password,
+      },
+    });
+    if (!user)
+      throw new HttpException('wrong credentials', HttpStatus.UNAUTHORIZED);
+    session.user = user;
+    console.log(session.user);
   }
 }
