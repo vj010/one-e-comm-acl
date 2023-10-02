@@ -19,9 +19,11 @@ export class UserRoleGuard implements CanActivate {
 
   validateRequest(user: Users, allowedRoles: UserRole[]): boolean {
     if (!user) return false;
-    if (!allowedRoles?.length) return false;
+    if (!allowedRoles?.length) return true;
+
     const userRole = user.role;
     if (!allowedRoles.includes(userRole)) return false;
+
     return true;
   }
 }
